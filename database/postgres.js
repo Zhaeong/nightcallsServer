@@ -19,8 +19,13 @@ module.exports = {
 		pool.query(text, values, (err, res) => {
 		  if (err) 
 		  {
-		    console.log(err.stack)
-		    callback('Error with query in createUser')
+		  	if (err.constraint == 'username_unique') {
+		  		console.log("Violated username_unique constraint")
+		  		callback('ERROR_USER_NOT_UNIQUE')
+		  	} else {
+		  		callback('ERROR_UNIDENTIFIED')
+		  	}
+		    //console.log(err.stack)s
 		  } 
 		  else 
 		  {
@@ -40,7 +45,9 @@ module.exports = {
 		pool.query(text, values, (err, res) => {
 		  if (err) 
 		  {
-		    console.log(err.stack)
+		  	console.log("ERROR")
+		  	console.log(err)
+		    //console.log(err.stack)
 		    callback('Error with query in loginUser')
 		  } 
 		  else 
